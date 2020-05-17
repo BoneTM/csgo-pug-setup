@@ -3,6 +3,7 @@
 #include <sdktools>
 #include <sourcemod>
 
+#include "pugsetup/globals.sp"
 #include "include/logdebug.inc"
 #include "include/pugsetup.inc"
 #include "include/restorecvars.inc"
@@ -1714,17 +1715,80 @@ public void PrintSetupInfo(int client) {
   }
 }
 
+
+// Add teamhit vote by Bone =========start
+public int TeamHitMenuHandler(Menu menu, MenuAction action, int clientOrResult, int selection)
+{
+	switch(action)
+	{
+		case MenuAction_Select:
+		{
+      int client = clientOrResult;
+      char info[5];
+      menu.GetItem(selection, info, sizeof(info));
+      if (StrEqual(info, "on"))
+      {
+        PugSetup_MessageToAll("%T", "FriendlyFireVoteOn", LANG_SERVER, client);
+      }
+      else if(StrEqual(info, "off"))
+      {
+        PugSetup_MessageToAll("%T", "FriendlyFireVoteOff", LANG_SERVER, client);
+      }
+		}
+		case MenuAction_VoteEnd:
+		{
+      int result = clientOrResult;
+      char info[5];
+      menu.GetItem(result, info, sizeof(info));
+      if (StrEqual(info, "on"))
+      {
+        PugSetup_MessageToAll("%T", "FriendlyFireEndOn", LANG_SERVER);
+        g_EnableFriendlyFire = true;
+      }
+      else if(StrEqual(info, "off"))
+      {
+        PugSetup_MessageToAll("%T", "FriendlyFireEndOff", LANG_SERVER);
+        g_EnableFriendlyFire = false;
+      }
+
+      if (g_AutoLive) {
+        CreateCountDown();
+      } else {
+        ChangeState(GameState_WaitingForStart);
+        CreateTimer(float(START_COMMAND_HINT_TIME), Timer_StartCommandHint);
+        GiveStartCommandHint();
+      }
+     
+		}
+		case MenuAction_End:
+		{
+			CloseHandle(menu);
+		}
+	}
+
+	return 0;
+}
+// Add teamhit vote by Bone =========end
+
 public void ReadyToStart() {
   Call_StartForward(g_hOnReadyToStart);
   Call_Finish();
 
-  if (g_AutoLive) {
-    CreateCountDown();
-  } else {
-    ChangeState(GameState_WaitingForStart);
-    CreateTimer(float(START_COMMAND_HINT_TIME), Timer_StartCommandHint);
-    GiveStartCommandHint();
-  }
+  // Add teamhit vote by Bone =========start
+  Menu teamHitMenu = new Menu(TeamHitMenuHandler);
+  teamHitMenu.SetTitle("是否开启队伤");
+  teamHitMenu.AddItem("off", "关闭");
+  teamHitMenu.AddItem("on", "开启");
+  teamHitMenu.ExitButton = false;
+  teamHitMenu.DisplayVoteToAll(10);
+  // Add teamhit vote by Bone =========end
+  // if (g_AutoLive) {
+  //   CreateCountDown();
+  // } else {
+  //   ChangeState(GameState_WaitingForStart);
+  //   CreateTimer(float(START_COMMAND_HINT_TIME), Timer_StartCommandHint);
+  //   GiveStartCommandHint();
+  // }
 }
 
 static void GiveStartCommandHint() {

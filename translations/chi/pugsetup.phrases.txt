@@ -456,4 +456,20 @@
 	{
 		"chi"		"{GREEN}{1}{NORMAL} 获胜；{GREEN}{2}{NORMAL} 将作为第二张地图；{GREEN}{3}{NORMAL} 将作为第三张地图"
 	}
+	"FriendlyFireVoteOn"
+	{
+		"chi"		"{1} 选择了 {GREEN}开启 {NORMAL}队伤"
+	}
+	"FriendlyFireVoteOff"
+	{
+		"chi"		"{1} 选择了 {LIGHT_RED}关闭 {NORMAL}队伤"
+	}
+	"FriendlyFireEndOn"
+	{
+		"chi"		"比赛将 {GREEN}开启 {NORMAL}队伤"
+	}
+	"FriendlyFireEndOff"
+	{
+		"chi"		"比赛将 {LIGHT_RED}关闭 {NORMAL}队伤"
+	}
 }

@@ -3,7 +3,7 @@
 
 #tryinclude "manual_version.sp"
 #if !defined PLUGIN_VERSION
-#define PLUGIN_VERSION "2.0.6-dev"
+#define PLUGIN_VERSION "2.0.5"
 #endif
 
 #define DEBUG_CVAR "sm_pugsetup_debug"
@@ -82,7 +82,7 @@ stock bool GetMenuBool(Menu menu, int param2) {
 stock int GetNumHumansOnTeam(int team) {
   int count = 0;
   for (int i = 1; i <= MaxClients; i++) {
-    if (IsValidClient(i) && !IsFakeClient(i) && GetClientTeam(i) == team)
+    if (IsValidClient(i) && !IsFakeClient(i))
       count++;
   }
   return count;
@@ -280,9 +280,6 @@ stock void Unpause() {
 
 stock void RestartGame(int delay) {
   ServerCommand("mp_restartgame %d", delay);
-  if (!g_EnableFriendlyFire){
-    ServerCommand("mp_friendlyfire 0");
-  }
 }
 
 stock int GetCookieInt(int client, Handle cookie, int defaultValue = 0) {
@@ -463,10 +460,6 @@ stock bool SplitOnSpace(const char[] str, char[] buf1, int len1, char[] buf2, in
 stock bool IsClientCoaching(int client) {
   return GetClientTeam(client) == CS_TEAM_SPECTATOR &&
          GetEntProp(client, Prop_Send, "m_iCoachingTeam") != 0;
-}
-
-stock int GetCoachTeam(int client) {
-  return GetEntProp(client, Prop_Send, "m_iCoachingTeam");
 }
 
 stock void UpdateCoachTarget(int client, int csTeam) {

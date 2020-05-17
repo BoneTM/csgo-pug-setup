@@ -487,4 +487,22 @@
 		"#format"		"{1:s},{2:s},{3:s}"
 		"en"		"{GREEN}{1}{NORMAL} won, {GREEN}{2}{NORMAL} came in 2nd, {GREEN}{3}{NORMAL} in 3rd"
 	}
+	"FriendlyFireVoteOn"
+	{
+		"#format"		"{1:N}"
+		"en"		"{1} Choose to {GREEN}Enable {NORMAL}friendlyfire"
+	}
+	"FriendlyFireVoteOff"
+	{
+		"#format"		"{1:N}"
+		"en"		"{1} Choose to {LIGHT_RED}Disable {NORMAL}friendlyfire"
+	}
+	"FriendlyFireEndOn"
+	{
+		"en"		"This match will {GREEN}Enable {NORMAL}friendlyfire"
+	}
+	"FriendlyFireEndOff"
+	{
+		"en"		"This match will {LIGHT_RED}Disable {NORMAL}friendlyfire"
+	}
 }
