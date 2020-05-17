@@ -280,7 +280,9 @@ stock void Unpause() {
 
 stock void RestartGame(int delay) {
   ServerCommand("mp_restartgame %d", delay);
-  if (!g_EnableFriendlyFire){
+  if (g_EnableFriendlyFire){
+    ServerCommand("mp_friendlyfire 1");
+  } else {
     ServerCommand("mp_friendlyfire 0");
   }
 }
